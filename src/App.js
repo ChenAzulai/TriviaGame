@@ -37,7 +37,8 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <p>
-            This is Trivia Game Test Test Test
+            This is Trivia Game Test Test
+
           </p>
         </header>
       </div>
