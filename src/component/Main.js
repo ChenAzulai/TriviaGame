@@ -6,7 +6,8 @@ const Main = () => {
 
     return (
         <div className="main">
-            <button onClick={() => setQuizState('playing')}>change state</button>
+            <label> Enter Your name:</label>
+            <button onClick={() => setQuizState('playing')}>Start Quiz</button>
 
         </div>
     )
