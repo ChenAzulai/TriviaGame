@@ -8,6 +8,7 @@ function App() {
     const [quizState, setQuizState] = useState("main");
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [currentAnswer, setCurrentAnswer] = useState("");
+    const [score, setScore] = useState(0);
 
     return (
         <div className="App">
@@ -20,11 +21,13 @@ function App() {
                     setCurrentQuestionIndex,
                     currentAnswer,
                     setCurrentAnswer,
+                    score,
+                    setScore,
                 }}
             >
                 {quizState === "main" && <Main/>}
-                {quizState === "playing" && <Quiz/>}
-                {quizState === "score" && <div>score</div>}
+                {quizState === "quiz" && <Quiz/>}
+                {quizState === "score" && <Quiz/>}
             </QuizContext.Provider>
         </div>
     );

@@ -6,22 +6,53 @@ const Quiz = () => {
     const {quizState, setQuizState} = useContext(QuizContext);
     const {currentQuestionIndex, setCurrentQuestionIndex} = useContext(QuizContext);
     const {currentAnswer, setCurrentAnswer} = useContext(QuizContext);
+    const {score,setScore}=useContext(QuizContext);
 
+    let questionSize = 5;//TODO: question length
+    const finishQuiz = () => {
+        //TODO: set score
+        setQuizState("score")
+    };
+
+    const mainMenu = () => {
+        //TODO: init params
+        setScore(0);
+        setQuizState("main");
+    };
+
+    const nextQuestion = () => {
+        //TODO: set score
+        //TODO: set setCurrentQuestionIndex
+    };
 
     return (
         <div className="quiz">
-            {quizState === 'gameOver' && (
-                <div>
-                    result
-                </div>
+            {quizState === "score" && (
+                <>
+                    <div>
+                        result: {score}
+                    </div>
+                    <div onClick={mainMenu}>
+                        Main Menu
+                    </div>
+                </>
             )}
-            {quizState === 'playing' && (
+            {quizState === "playing" && (
                 <>
                     <Question/>
                     {currentAnswer && (
-                        <div>
-                            Next question or Finish Game
-                        </div>
+                        <>
+                            {currentQuestionIndex === questionSize && (
+                                <button onClick={finishQuiz}>
+                                    Finish Quiz
+                                </button>
+                            )}
+                            {currentQuestionIndex !== questionSize && (
+                                <button onClick={nextQuestion}>
+                                    Next Question
+                                </button>
+                            )}
+                        </>
                     )}
                 </>
             )}

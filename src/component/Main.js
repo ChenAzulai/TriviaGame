@@ -7,7 +7,7 @@ const Main = () => {
     return (
         <div className="main">
             <label> Enter Your name:</label>
-            <button onClick={() => setQuizState('playing')}>Start Quiz</button>
+            <button onClick={() => setQuizState("quiz")}>Start Quiz</button>
 
         </div>
     )
