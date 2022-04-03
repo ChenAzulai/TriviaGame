@@ -7,7 +7,7 @@ const Answer = ({
 
     return (
         <div>
-            <div className="answer-text">this is 1 answer</div>
+            <div className="answer-text">this is {index} answer</div>
         </div>
     );
 };

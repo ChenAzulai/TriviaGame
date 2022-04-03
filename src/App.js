@@ -7,6 +7,8 @@ import Quiz from "./component/Quiz";
 function App() {
     const [quizState, setQuizState] = useState("main");
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [currentAnswer, setCurrentAnswer] = useState("");
+
     return (
         <div className="App">
             <h1>Quiz Game</h1>
@@ -16,6 +18,8 @@ function App() {
                     setQuizState,
                     currentQuestionIndex,
                     setCurrentQuestionIndex,
+                    currentAnswer,
+                    setCurrentAnswer,
                 }}
             >
                 {quizState === "main" && <Main/>}

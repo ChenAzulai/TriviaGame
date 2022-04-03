@@ -9,7 +9,9 @@ const Question = () => {
         <div>
             <div className="question">This is question number 1</div>
             <div className="answers">
-                <Answer/>
+                <Answer
+                    index={currentQuestionIndex}
+                />
             </div>
         </div>
     )
