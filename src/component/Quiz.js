@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import {QuizContext} from "../contexts/quizContext";
+import data from "../DB";
 import Question from "./Question";
 
 const Quiz = () => {
@@ -8,7 +9,7 @@ const Quiz = () => {
     const {currentAnswer, setCurrentAnswer} = useContext(QuizContext);
     const {score,setScore}=useContext(QuizContext);
 
-    let questionSize = 5;//TODO: question length
+    let questionSize = data.length;//TODO: question length
     const finishQuiz = () => {
         //TODO: set score
         setQuizState("score")
@@ -37,12 +38,12 @@ const Quiz = () => {
                     </div>
                 </>
             )}
-            {quizState === "playing" && (
+            {quizState === "quiz" && (
                 <>
                     <Question/>
                     {currentAnswer && (
                         <>
-                            {currentQuestionIndex === questionSize && (
+                            {currentQuestionIndex === questionSize - 1 && (
                                 <button onClick={finishQuiz}>
                                     Finish Quiz
                                 </button>

@@ -3,12 +3,15 @@ import "./App.css"
 import {QuizContext} from "./contexts/quizContext";
 import Main from "./component/Main";
 import Quiz from "./component/Quiz";
+import data from "./DB";
 
 function App() {
     const [quizState, setQuizState] = useState("main");
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [currentAnswer, setCurrentAnswer] = useState("");
     const [score, setScore] = useState(0);
+    const [questions] = useState(data);
+    console.log(questions);
 
     return (
         <div className="App">
@@ -23,7 +26,8 @@ function App() {
                     setCurrentAnswer,
                     score,
                     setScore,
-                }}
+                    questions,
+                 }}
             >
                 {quizState === "main" && <Main/>}
                 {quizState === "quiz" && <Quiz/>}

@@ -3,11 +3,12 @@ import {QuizContext} from "../contexts/quizContext";
 
 const Answer = ({
                     index,
+                    text
                 }) => {
 
     return (
         <div>
-            <div className="answer-text">this is {index} answer</div>
+            <div className="answer-text">{index}.{text}</div>
         </div>
     );
 };
