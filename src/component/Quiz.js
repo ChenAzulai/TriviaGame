@@ -14,7 +14,7 @@ const Quiz = () => {
     const {answers, setAnswers} = useContext(QuizContext);
     const {currentName} = useContext(QuizContext);
 
-    let questionSize = data.length;//TODO: question length
+    let quizLength = 5;  //questions.length; really?! is so long
 
     const [counter, setCounter] = useState(30);
     const [isActive, setIsActive] = useState(true);
@@ -42,10 +42,30 @@ const Quiz = () => {
         setCurrentAnswer("");
     };
 
+    const setStorage = (score, currentName) => {
+        const newRecord = [score, currentName];
+        const resultsItem = localStorage.getItem('resultsTable');
+        let resultArr=[];
+        if (resultsItem) {
+            resultArr = JSON.parse(resultsItem);
+            resultArr.push(newRecord);
+            if (resultArr > 10) resultArr.shift();
+            console.log('LocalStorage restored and changed');
+
+        } else {
+            resultArr.push(newRecord);
+            console.log('No record found')
+        }
+        localStorage.setItem('resultsTable', JSON.stringify(resultArr));
+        console.log('LocalStorage updated');
+
+    };
+
     const mainMenu = () => {
         //TODO: init params
         setScore(0);
         setQuizState("main");
+        setStorage(score, currentName);
     };
 
     const clacScore = (time, question) => {
@@ -54,7 +74,7 @@ const Quiz = () => {
             difficulty === "medium" ? 1 : 0.8;
         const ans = question.correct_answer === currentAnswer;
         if (!ans) return score;
-        return score + (ratio * time);
+        return Math.round(score + (ratio * time));
     };
 
     const nextQuestion = () => {
@@ -71,7 +91,7 @@ const Quiz = () => {
             {quizState === "score" && (
                 <div className="score-screen" style={{width: 'fit-content', display: 'inline-block'}}>
                     <div>
-                        {currentName} you have got : {Math.round(score)} points!
+                        {currentName} you have got : {score} points!
                     </div>
                     <div onClick={mainMenu} style={{cursor: 'pointer', background: 'grey'}}>
                         Main Menu
@@ -84,16 +104,16 @@ const Quiz = () => {
 
                     <Question
                         toggleTimer={() => toggle()}
-
+                        quizLength={quizLength}
                     />
                     {currentAnswer && (
                         <>
-                            {currentQuestionIndex === questionSize - 1 && (
+                            {currentQuestionIndex === quizLength - 1 && (
                                 <button onClick={finishQuiz}>
                                     Finish Quiz
                                 </button>
                             )}
-                            {currentQuestionIndex !== questionSize - 1 && (
+                            {currentQuestionIndex !== quizLength - 1 && (
                                 <button onClick={nextQuestion}>
                                     Next Question
                                 </button>

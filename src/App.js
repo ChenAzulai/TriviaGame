@@ -3,7 +3,6 @@ import "./App.css"
 import {QuizContext} from "./contexts/quizContext";
 import Main from "./component/Main";
 import Quiz from "./component/Quiz";
-import data from "./DB";
 
 function App() {
 
@@ -15,6 +14,20 @@ function App() {
     const [answers, setAnswers] = useState([]);
     const [currentName, setCurrentName] = useState("");
 
+
+    const getResultsFromStorage = () => {
+        const resultsItem = localStorage.getItem('resultsTable');
+        if (resultsItem) {
+            const resultArr = JSON.parse(resultsItem);
+            console.log('LocalStorage records: ', resultArr);
+            return resultArr.sort((a, b) => b[0] - a[0])
+                ;
+        } else {
+            console.log('LocalStorage has no records: ');
+        }
+        return [];
+    };
+
     useEffect(() => {
         const url = "https://opentdb.com/api.php?amount=100";
         fetch(url)
@@ -23,9 +36,10 @@ function App() {
             .then(() => setQuizState("main"));
     }, []);
 
+    const resultsRecords = getResultsFromStorage();
+
     return (
         <div className="App">
-            <h1>Quiz Game</h1>
             < QuizContext.Provider
                 value={{
                     quizState,
@@ -43,7 +57,25 @@ function App() {
                     setCurrentName,
                 }}
             >
+                <h1>Quiz Game</h1>
                 {questions.length === 0 && <div>Loading...</div>}
+                {quizState === "main" &&
+                <table id="Records table" style={{width: 'fit-content', display: 'inline-block'}}>
+                    <tbody>
+                    {resultsRecords.map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{item[1]}</td>
+                                    <td>{item[0]}</td>
+                                </tr>
+                            )
+                        }
+                    )}
+                    </tbody>
+                </table>
+                }
+
+
                 {quizState === "main" && <Main/>}
                 {quizState === "quiz" && <Quiz/>}
                 {quizState === "score" && <Quiz/>}

@@ -19,6 +19,7 @@ const shuffleAns = (que) => {
 
 const Question = ({
                       toggleTimer,
+                      quizLength,
                   }) => {
     const {quizState, setQuizState} = useContext(QuizContext);
     const {currentQuestionIndex, setCurrentQuestionIndex} = useContext(QuizContext);
@@ -37,8 +38,8 @@ const Question = ({
     return (
         <div>
             <div className="question">
-                <div>{currentQuestionIndex + 1}/{data.length}</div>
-                <div>{data[currentQuestionIndex].question}</div>
+                <div>{currentQuestionIndex + 1}/{quizLength}</div>
+                <div>{questions[currentQuestionIndex].question}</div>
             </div>
             <div className="answers">
                 {answers.map((answer, index) => (
