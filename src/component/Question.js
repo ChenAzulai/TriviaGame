@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import {QuizContext} from "../contexts/quizContext";
-import data from "../DB";
 import Answer from "./Answer";
 
 const shuffleAns = (que) => {
