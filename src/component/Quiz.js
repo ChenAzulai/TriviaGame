@@ -3,7 +3,6 @@ import {QuizContext} from "../contexts/quizContext";
 import data from "../DB";
 import Question from "./Question";
 import {shuffleAns} from "../helpers/helper"
-import Answer from "./Answer";
 
 
 const Quiz = () => {
@@ -13,9 +12,9 @@ const Quiz = () => {
     const {score, setScore} = useContext(QuizContext);
     const {questions} = useContext(QuizContext);
     const {answers, setAnswers} = useContext(QuizContext);
+    const {currentName} = useContext(QuizContext);
 
     let questionSize = data.length;//TODO: question length
-
 
     const [counter, setCounter] = useState(30);
     const [isActive, setIsActive] = useState(true);
@@ -37,7 +36,7 @@ const Quiz = () => {
     };
 
     const finishQuiz = () => {
-        setScore(score + clacScore(counter, questions[currentQuestionIndex].difficulty));        //TODO: add dcalculate score
+        setScore(clacScore(counter, questions[currentQuestionIndex]));
         setCurrentQuestionIndex(0);
         setQuizState("score");
         setCurrentAnswer("");
@@ -49,17 +48,20 @@ const Quiz = () => {
         setQuizState("main");
     };
 
-    const clacScore = (time, difficulty) => {
-        const diff = difficulty === "hard" ? 1.2 :
+    const clacScore = (time, question) => {
+        const difficulty = question.difficulty;
+        const ratio = difficulty === "hard" ? 1.2 :
             difficulty === "medium" ? 1 : 0.8;
-        return diff + time;
+        const ans = question.correct_answer === currentAnswer;
+        if (!ans) return score;
+        return score + (ratio * time);
     };
 
     const nextQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setCurrentAnswer("");
         setAnswers(shuffleAns(questions[currentQuestionIndex + 1]));
-        setScore(score + clacScore(counter, questions[currentQuestionIndex].difficulty));        //TODO: add dcalculate score
+        setScore(clacScore(counter, questions[currentQuestionIndex]));
         setCounter(30);
         toggle();
     };
@@ -69,7 +71,7 @@ const Quiz = () => {
             {quizState === "score" && (
                 <div className="score-screen" style={{width: 'fit-content', display: 'inline-block'}}>
                     <div>
-                        result: {score}
+                        {currentName} you have got : {Math.round(score)} points!
                     </div>
                     <div onClick={mainMenu} style={{cursor: 'pointer', background: 'grey'}}>
                         Main Menu

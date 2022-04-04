@@ -10,10 +10,11 @@ const Answer = ({
 
     return (
         <button className="answer-text"
+                key={index}
                 onClick={() => answerSelected(text)}
                 disabled={isEnable !== "" && isEnable !== text}
         >
-            {index}.{text}
+            {index}: {text}
         </button>
     );
 };
