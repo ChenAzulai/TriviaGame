@@ -11,7 +11,8 @@ function App() {
     const [currentAnswer, setCurrentAnswer] = useState("");
     const [score, setScore] = useState(0);
     const [questions] = useState(data);
-    console.log(questions);
+    const [answers,setAnswers] = useState([]);
+
 
     return (
         <div className="App">
@@ -27,6 +28,8 @@ function App() {
                     score,
                     setScore,
                     questions,
+                    answers,
+                    setAnswers,
                  }}
             >
                 {quizState === "main" && <Main/>}

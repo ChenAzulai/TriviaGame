@@ -1,9 +1,10 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {QuizContext} from "../contexts/quizContext";
 import data from "../DB";
 import Answer from "./Answer";
 
 const shuffleAns = (que) => {
+    console.log("shuffleAns", que);
     if (!que) {
         return [];
     }
@@ -21,15 +22,13 @@ const Question = () => {
     const {currentQuestionIndex, setCurrentQuestionIndex} = useContext(QuizContext);
     const {currentAnswer, setCurrentAnswer} = useContext(QuizContext);
     const {questions} = useContext(QuizContext);
-
-    const answers = currentQuestionIndex === data.length - 1 ? []
-        : shuffleAns(questions[currentQuestionIndex]);
-
+    const {answers, setAnswers} = useContext(QuizContext);
+    // const answersList = shuffleAns(questions[currentQuestionIndex]);
+    console.log("currentQuestionIndex: ",currentQuestionIndex);
 
     const answerClicked = (answerText) => {
-        setCurrentAnswer(answerText)
+        setCurrentAnswer(answerText);
     };
-
 
     return (
         <div>
@@ -38,14 +37,13 @@ const Question = () => {
                 <div>{data[currentQuestionIndex].question}</div>
             </div>
             <div className="answers">
-                {answers.map((answer,index)=>(
-                    <Answer
-                        index={index+1}
-                        answerSelected={(answerText) => answerClicked(answerText)}
-                        text={answer}
-                    />
+                {answers.map((answer, index) => (
+                        <Answer
+                            index={index + 1}
+                            answerSelected={(answerText) => answerClicked(answerText)}
+                            text={answer}
+                        />
                     )
-
                 )}
             </div>
         </div>

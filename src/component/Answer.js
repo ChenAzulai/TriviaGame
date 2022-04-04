@@ -3,13 +3,14 @@ import {QuizContext} from "../contexts/quizContext";
 
 const Answer = ({
                     index,
-                    text
+                    text,
+                    answerSelected
                 }) => {
 
     return (
-        <div>
-            <div className="answer-text">{index}.{text}</div>
-        </div>
+        <button className="answer-text" onClick={()=>answerSelected(text)}>
+             {index}.{text}
+        </button>
     );
 };
 
