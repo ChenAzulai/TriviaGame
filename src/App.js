@@ -62,6 +62,10 @@ function App() {
                 {quizState === "main" &&
                 <table id="Records table" style={{width: 'fit-content', display: 'inline-block'}}>
                     <tbody>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Score</th>
+                    </tr>
                     {resultsRecords.map((item, index) => {
                             return (
                                 <tr key={index}>
