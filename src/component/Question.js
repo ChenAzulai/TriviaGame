@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {QuizContext} from "../contexts/quizContext";
 import data from "../DB";
 import Answer from "./Answer";
@@ -17,17 +17,21 @@ const shuffleAns = (que) => {
         .map((a) => a.value);
 };
 
-const Question = () => {
+const Question = ({
+                      toggleTimer,
+                  }) => {
     const {quizState, setQuizState} = useContext(QuizContext);
     const {currentQuestionIndex, setCurrentQuestionIndex} = useContext(QuizContext);
     const {currentAnswer, setCurrentAnswer} = useContext(QuizContext);
     const {questions} = useContext(QuizContext);
     const {answers, setAnswers} = useContext(QuizContext);
-    // const answersList = shuffleAns(questions[currentQuestionIndex]);
-    console.log("currentQuestionIndex: ",currentQuestionIndex);
+
+
+
 
     const answerClicked = (answerText) => {
         setCurrentAnswer(answerText);
+        toggleTimer();
     };
 
     return (

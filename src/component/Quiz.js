@@ -1,8 +1,9 @@
-import React, {useContext} from "react";
+import React, {useContext,useEffect,useState} from "react";
 import {QuizContext} from "../contexts/quizContext";
 import data from "../DB";
 import Question from "./Question";
 import {shuffleAns} from "../helpers/helper"
+import Answer from "./Answer";
 
 
 const Quiz = () => {
@@ -14,6 +15,26 @@ const Quiz = () => {
     const {answers,setAnswers}=useContext(QuizContext);
 
     let questionSize = data.length;//TODO: question length
+
+
+    const [counter, setCounter] = useState(30);
+    const [isActive, setIsActive] = useState(true);
+
+    useEffect(() => {
+        let interval = null;
+        if (isActive && counter > 0) {
+            interval = setInterval(() => {
+                setCounter(counter => counter - 1);
+            }, 1000);
+        } else if (currentAnswer !== "") {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [counter]);
+
+    const toggle=()=>{
+        setIsActive(!isActive);
+    };
 
     const finishQuiz = () => {
         //TODO: set score
@@ -33,8 +54,8 @@ const Quiz = () => {
         setCurrentQuestionIndex(currentQuestionIndex+1);
         setCurrentAnswer("");
         setAnswers(shuffleAns(questions[currentQuestionIndex+1]));
-        // setAnswers([]);
-        // answers(shuffleAns(questions[currentQuestionIndex]));
+        setCounter(60);
+        toggle();
         //TODO: set score
     };
 
@@ -52,7 +73,12 @@ const Quiz = () => {
             )}
             {quizState === "quiz" && (
                 <>
-                    <Question/>
+                    <div>Countdown: {counter}</div>
+
+                    <Question
+                        toggleTimer={() => toggle()}
+
+                    />
                     {currentAnswer && (
                         <>
                             {currentQuestionIndex === questionSize - 1 && (
