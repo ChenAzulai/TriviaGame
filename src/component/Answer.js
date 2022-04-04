@@ -4,12 +4,16 @@ import {QuizContext} from "../contexts/quizContext";
 const Answer = ({
                     index,
                     text,
-                    answerSelected
+                    answerSelected,
+                    isEnable,
                 }) => {
 
     return (
-        <button className="answer-text" onClick={()=>answerSelected(text)}>
-             {index}.{text}
+        <button className="answer-text"
+                onClick={() => answerSelected(text)}
+                disabled={isEnable !== "" && isEnable !== text}
+        >
+            {index}.{text}
         </button>
     );
 };

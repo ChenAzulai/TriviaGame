@@ -18,7 +18,9 @@ const Quiz = () => {
     const finishQuiz = () => {
         //TODO: set score
         setCurrentQuestionIndex(0);
-        setQuizState("score")
+        setQuizState("score");
+        setCurrentAnswer("");
+
     };
 
     const mainMenu = () => {

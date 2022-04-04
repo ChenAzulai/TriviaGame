@@ -39,6 +39,7 @@ const Question = () => {
             <div className="answers">
                 {answers.map((answer, index) => (
                         <Answer
+                            isEnable={currentAnswer}
                             index={index + 1}
                             answerSelected={(answerText) => answerClicked(answerText)}
                             text={answer}
