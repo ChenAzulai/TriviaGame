@@ -9,11 +9,12 @@ const Quiz = () => {
     const {currentQuestionIndex, setCurrentQuestionIndex} = useContext(QuizContext);
     const {currentAnswer, setCurrentAnswer} = useContext(QuizContext);
     const {score, setScore} = useContext(QuizContext);
-    const {questions} = useContext(QuizContext);
+    const {questions, setQuestions} = useContext(QuizContext);
     const {answers, setAnswers} = useContext(QuizContext);
     const {currentName} = useContext(QuizContext);
 
-    let quizLength = 5;  //questions.length; really?! is so long
+    const quizLength = 5;  //questions.length; really?! is so long
+    const timeOut = "timeOut";
 
     const [counter, setCounter] = useState(30);
     const [isActive, setIsActive] = useState(true);
@@ -24,6 +25,9 @@ const Quiz = () => {
             interval = setInterval(() => {
                 setCounter(counter => counter - 1);
             }, 1000);
+        } else if (counter === 0) {
+            setCurrentAnswer(timeOut);
+            clearInterval(interval);
         } else if (!isActive) {
             clearInterval(interval);
         }
@@ -34,23 +38,32 @@ const Quiz = () => {
         setIsActive(!isActive);
     };
 
+    const shuffleArray = (array) => {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    };
+
     const finishQuiz = () => {
-        setScore(clacScore(counter, questions[currentQuestionIndex]));
+        if (currentAnswer !== timeOut) setScore(clacScore(counter, questions[currentQuestionIndex]));
         setCurrentQuestionIndex(0);
         setQuizState("score");
         setCurrentAnswer("");
+        setQuestions(shuffleArray(questions));
     };
 
     const setStorage = (score, currentName) => {
-        const newRecord = [score, currentName];
+        const name = currentName === "" ? "None" : currentName;
+        const newRecord = [score, name];
         const resultsItem = localStorage.getItem('resultsTable');
-        let resultArr=[];
+        let resultArr = [];
         if (resultsItem) {
             resultArr = JSON.parse(resultsItem);
             resultArr.push(newRecord);
-            if (resultArr > 10) resultArr.shift();
-            console.log('LocalStorage restored and changed');
-
+            if (resultArr.length > 10) resultArr.shift();
         } else {
             resultArr.push(newRecord);
             console.log('No record found')
@@ -61,7 +74,6 @@ const Quiz = () => {
     };
 
     const mainMenu = () => {
-        //TODO: init params
         setScore(0);
         setQuizState("main");
         setStorage(score, currentName);
@@ -80,7 +92,7 @@ const Quiz = () => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setCurrentAnswer("");
         setAnswers(shuffleAns(questions[currentQuestionIndex + 1]));
-        setScore(clacScore(counter, questions[currentQuestionIndex]));
+        if (currentAnswer !== timeOut) setScore(clacScore(counter, questions[currentQuestionIndex]));
         setCounter(30);
         toggle();
     };
@@ -92,9 +104,9 @@ const Quiz = () => {
                     <div>
                         {currentName} you have got : {score} points!
                     </div>
-                    <div onClick={mainMenu} style={{cursor: 'pointer', background: 'grey'}}>
+                    <button onClick={mainMenu} style={{}}>
                         Main Menu
-                    </div>
+                    </button>
                 </div>
             )}
             {quizState === "quiz" && (

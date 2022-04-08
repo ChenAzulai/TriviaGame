@@ -51,6 +51,7 @@ function App() {
                     score,
                     setScore,
                     questions,
+                    setQuestions,
                     answers,
                     setAnswers,
                     currentName,
@@ -60,7 +61,7 @@ function App() {
                 <h1>Quiz Game</h1>
                 {questions.length === 0 && <div>Loading...</div>}
                 {quizState === "main" &&
-                <table id="Records table" style={{width: 'fit-content', display: 'inline-block'}}>
+                <table id="Records-table" style={{width: 'fit-content', display: 'inline-block'}}>
                     <tbody>
                     <tr>
                         <th>User Name</th>

@@ -1,20 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import {QuizContext} from "../contexts/quizContext";
 import Answer from "./Answer";
-
-const shuffleAns = (que) => {
-    console.log("shuffleAns", que);
-    if (!que) {
-        return [];
-    }
-    const ans = [
-        que.correct_answer,
-        ...que.incorrect_answers,
-    ];
-    return ans.map((a) => ({sort: Math.random(), value: a}))
-        .sort((a, b) => a.sort - b.sort)
-        .map((a) => a.value);
-};
+import he from 'he'
+import "../App.css"
 
 const Question = ({
                       toggleTimer,
@@ -26,9 +14,6 @@ const Question = ({
     const {questions} = useContext(QuizContext);
     const {answers, setAnswers} = useContext(QuizContext);
 
-
-
-
     const answerClicked = (answerText) => {
         setCurrentAnswer(answerText);
         toggleTimer();
@@ -38,18 +23,19 @@ const Question = ({
         <div>
             <div className="question">
                 <div>{currentQuestionIndex + 1}/{quizLength}</div>
-                <div>{questions[currentQuestionIndex].question}</div>
-            </div>
-            <div className="answers">
-                {answers.map((answer, index) => (
-                        <Answer
-                            isEnable={currentAnswer}
-                            index={index + 1}
-                            answerSelected={(answerText) => answerClicked(answerText)}
-                            text={answer}
-                        />
-                    )
-                )}
+                <div>{he.decode(questions[currentQuestionIndex].question)}</div>
+
+                <div className="answers">
+                    {answers.map((answer, index) => (
+                            <Answer
+                                isEnable={currentAnswer}
+                                index={index + 1}
+                                answerSelected={(answerText) => answerClicked(answerText)}
+                                text={he.decode(answer)}
+                            />
+                        )
+                    )}
+                </div>
             </div>
         </div>
     )

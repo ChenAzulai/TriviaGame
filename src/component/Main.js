@@ -16,19 +16,29 @@ const Main = () => {
         setQuizState("quiz");
         setAnswers(shuffleAns(questions[currentQuestionIndex]));
         setScore(0);
-
     };
 
 
     return (
-        <div className="main">
-            <label> Enter Your name:</label>
+        <div className="main" style={{position: 'relative', margin: '25px'}}>
+            <label style={{fontSize: '16px'}}> Enter Your name:</label>
             <input
+                style={{border: '0px',
+                    borderBottom: '1px solid #555',
+                    padding: '5px',
+                    fontSize: '16px'}}
                 type="text"
                 placeholder={currentName}
                 onChange={(e) => setCurrentName(e.target.value)}
             />
-            <button onClick={startQuiz}>Start Quiz</button>
+            <br/>
+            <button
+                style={{position: 'relative',
+                    padding: '10px',
+                    margin: '5px',
+                }}
+                onClick={startQuiz}>Start Quiz
+            </button>
 
         </div>
     )
