@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import {QuizContext} from "../contexts/quizContext";
 
 const Answer = ({
                     index,

@@ -8,7 +8,6 @@ const Question = ({
                       toggleTimer,
                       quizLength,
                   }) => {
-    const {quizState, setQuizState} = useContext(QuizContext);
     const {currentQuestionIndex, setCurrentQuestionIndex} = useContext(QuizContext);
     const {currentAnswer, setCurrentAnswer} = useContext(QuizContext);
     const {questions} = useContext(QuizContext);

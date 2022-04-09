@@ -15,7 +15,6 @@ const Main = () => {
     const startQuiz = () => {
         setQuizState("quiz");
         setAnswers(shuffleAns(questions[currentQuestionIndex]));
-        setScore(0);
     };
 
 
